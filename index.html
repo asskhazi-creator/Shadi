@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUJH SE SHADI KAROGEY | Trusted Indian Matrimonial Platform</title>
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Firebase v8 Compat SDK CDNs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- Tailwind Custom Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Cinzel"', 'serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            maroon: {
+              50: '#faf0f1',
+              100: '#f5dbdf',
+              200: '#eab6be',
+              300: '#da8794',
+              400: '#c55365',
+              500: '#800020', /* Deep Crimson Maroon */
+              600: '#731320',
+              700: '#5c0612',
+              800: '#40030a',
+              900: '#2c0105',
+            },
+            gold: {
+              50: '#fefcf3',
+              100: '#faf5d9',
+              200: '#f3e6aa',
+              300: '#ebd373',
+              400: '#e1bd3f',
+              500: '#C5A059', /* Indian Matrimonial Matte Gold */
+              600: '#a38043',
+              700: '#816233',
+              800: '#5e4523',
+              900: '#433119',
+            },
+            cream: {
+              50: '#FCF9F2',
+              100: '#FAF6F0',
+              200: '#F3EDE2',
+              300: '#E6DCC9',
+              400: '#D5C4A8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style type="text/css">
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FCF9F2;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C5A059;
+      border-radius: 3px;
+    }
+    
+    /* Print Styles for Biodata Card */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-biodata-container, #print-biodata-container * {
+        visibility: visible;
+      }
+      #print-biodata-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none !important;
+        border: 4px double #800020 !important;
+        padding: 20px !important;
+        background: white !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-cream-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+  <!-- ================= TOP MODE BANNER ================= -->
+  <div id="mode-banner" class="bg-amber-50 border-b border-amber-200 text-amber-900 py-2.5 px-4 text-xs md:text-sm font-medium flex items-center justify-between no-print">
+    <div class="flex items-center gap-2 mx-auto">
+      <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 flex-shrink-0 animate-pulse"></i>
+      <span id="banner-text">Running in <strong>LocalStorage Offline Mode</strong>. Data is securely saved on your device. Click "Setup Firebase" to connect to your live cloud.</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="openSetupModal()" class="bg-maroon-700 hover:bg-maroon-800 text-white font-semibold px-3 py-1 rounded text-xs transition duration-200 shadow-sm whitespace-nowrap">Setup Firebase</button>
+      <button onclick="document.getElementById('mode-banner').remove()" class="text-amber-700 hover:text-amber-900"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+  </div>
+
+  <!-- ================= APP HEADER & NAVIGATION ================= -->
+  <header class="bg-maroon-900 text-white shadow-md sticky top-0 z-40 border-b-2 border-gold-500 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-3">
+        
+        <!-- Logo & Title -->
+        <a href="#" onclick="navigateTo('home')" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-full bg-gold-500 flex items-center justify-center border-2 border-white shadow-inner transform group-hover:scale-105 transition-transform duration-300">
+            <span class="text-maroon-900 font-display font-bold text-xl">MS</span>
+          </div>
+          <div>
+            <h1 class="font-display font-black text-lg md:text-xl tracking-wider text-gold-200 uppercase leading-none">MUJH SE SHADI KAROGEY</h1>
+            <p class="text-[10px] md:text-xs text-cream-200 font-serif italic tracking-wide">Connecting Hearts through Local Marriage Brokers</p>
+          </div>
+        </a>
+
+        <!-- Navigation Links (Desktop) -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <button onclick="navigateTo('home')" class="nav-btn py-2 px-3 border-b-2 border-transparent hover:text-gold-300 transition duration-200 flex items-center gap-1.5 active-nav" id="nav-home">
+            <i data-lucide="search" class="w-4 h-4"></i> Search Profiles
+          </button>
+          <button onclick="navigateTo('dashboard')" class="nav-btn py-2 px-3 border-b-2 border-transparent hover:text-gold-300 transition duration-200 flex items-center gap-1.5" id="nav-dashboard">
+            <i data-lucide="briefcase" class="w-4 h-4"></i> Broker Portal
+          </button>
+          <button onclick="navigateTo('admin')" class="nav-btn py-2 px-3 border-b-2 border-transparent hover:text-gold-300 transition duration-200 flex items-center gap-1.5" id="nav-admin">
+            <i data-lucide="shield-check" class="w-4 h-4"></i> Admin Panel
+          </button>
+        </nav>
+
+        <!-- Right Side Header Status & Buttons -->
+        <div class="hidden md:flex items-center gap-3" id="header-user-panel">
+          <!-- Auth Status will load here -->
+        </div>
+
+        <!-- Mobile Menu Trigger -->
+        <div class="flex items-center md:hidden gap-3">
+          <button onclick="toggleMobileMenu()" class="text-gold-100 hover:text-white focus:outline-none">
+            <i data-lucide="menu" class="w-6 h-6" id="mobile-menu-icon"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-maroon-950 border-t border-maroon-800 px-4 py-4 space-y-3 transition-all duration-300">
+      <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left py-2.5 px-3 rounded text-cream-100 hover:bg-maroon-800 hover:text-gold-200 flex items-center gap-3">
+        <i data-lucide="search" class="w-5 h-5 text-gold-400"></i> Search Profiles
+      </button>
+      <button onclick="navigateTo('dashboard'); toggleMobileMenu()" class="w-full text-left py-2.5 px-3 rounded text-cream-100 hover:bg-maroon-800 hover:text-gold-200 flex items-center gap-3">
+        <i data-lucide="briefcase" class="w-5 h-5 text-gold-400"></i> Broker Portal
+      </button>
+      <button onclick="navigateTo('admin'); toggleMobileMenu()" class="w-full text-left py-2.5 px-3 rounded text-cream-100 hover:bg-maroon-800 hover:text-gold-200 flex items-center gap-3">
+        <i data-lucide="shield-check" class="w-5 h-5 text-gold-400"></i> Admin Console
+      </button>
+      <div class="border-t border-maroon-800 pt-3" id="mobile-user-panel">
+        <!-- Mobile auth indicators load here -->
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT VIEWS ================= -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 no-print">
+
+    <!-- ================= 1. PUBLIC HOME VIEW ================= -->
+    <section id="view-home" class="space-y-6">
+      
+      <!-- Hero Header Banner -->
+      <div class="relative bg-gradient-to-r from-maroon-900 to-maroon-800 rounded-2xl overflow-hidden shadow-lg border border-gold-600">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="relative max-w-3xl px-6 py-10 md:py-14 space-y-4">
+          <span class="inline-block bg-gold-500/20 text-gold-200 border border-gold-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest">Auspicious Matrimony</span>
+          <h2 class="font-serif font-bold text-3xl md:text-4xl text-cream-50 text-shadow-sm">Find Your Perfect Life Partner & Secure Alliance</h2>
+          <p class="text-sm md:text-base text-cream-100/90 leading-relaxed max-w-xl">
+            Browse through genuine biodatas uploaded and verified by authorized local marriage brokers. Connect with families securely.
+          </p>
+        </div>
+      </div>
+
+      <!-- Live Interactive Search & Filter Card -->
+      <div class="bg-white rounded-xl shadow-md border border-cream-200 p-5">
+        <div class="flex items-center gap-2 border-b border-cream-100 pb-3 mb-4">
+          <i data-lucide="sliders-horizontal" class="w-5 h-5 text-maroon-700"></i>
+          <h3 class="font-serif font-bold text-lg text-maroon-900">Advanced Search Filters</h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          
+          <!-- Looking For / Gender -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Looking For</label>
+            <select id="filter-gender" onchange="applyFilters()" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+              <option value="all">Any Gender</option>
+              <option value="bride">Bride (वधू)</option>
+              <option value="groom">Groom (वर)</option>
+            </select>
+          </div>
+
+          <!-- Religion -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Religion (धर्म)</label>
+            <select id="filter-religion" onchange="applyFilters()" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+              <option value="all">All Religions</option>
+              <option value="Hindu">Hinduism</option>
+              <option value="Muslim">Islam</option>
+              <option value="Sikh">Sikhism</option>
+              <option value="Christian">Christianity</option>
+              <option value="Jain">Jainism</option>
+            </select>
+          </div>
+
+          <!-- Age Range -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Age Group</label>
+            <select id="filter-age" onchange="applyFilters()" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+              <option value="all">Any Age</option>
+              <option value="18-25">18 - 25 years</option>
+              <option value="26-32">26 - 32 years</option>
+              <option value="33-40">33 - 40 years</option>
+              <option value="40+">Above 40</option>
+            </select>
+          </div>
+
+          <!-- City / State Search -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Location / City</label>
+            <div class="relative">
+              <input type="text" id="filter-location" oninput="applyFilters()" placeholder="E.g. Delhi, Mumbai" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 pl-8 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+              <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-2.5 top-3"></i>
+            </div>
+          </div>
+
+          <!-- Search by Caste / Keyword -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Caste / Caste No Bar</label>
+            <div class="relative">
+              <input type="text" id="filter-keyword" oninput="applyFilters()" placeholder="E.g. Brahmin, Patel" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 pl-8 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-3"></i>
+            </div>
+          </div>
+
+        </div>
+        <div class="mt-4 pt-3 border-t border-cream-100 flex items-center justify-between text-xs text-slate-500">
+          <span id="profiles-count">Found 0 profiles matching criteria</span>
+          <button onclick="resetFilters()" class="text-maroon-700 hover:text-maroon-900 font-bold flex items-center gap-1">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Clear Filters
+          </button>
+        </div>
+      </div>
+
+      <!-- Public Candidate Directory Grid -->
+      <div id="public-profiles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Profile cards will dynamically mount here -->
+      </div>
+
+      <!-- Empty State for Search -->
+      <div id="home-empty-state" class="hidden text-center py-12 bg-white rounded-xl border border-cream-200 space-y-3">
+        <div class="w-16 h-16 rounded-full bg-cream-100 flex items-center justify-center mx-auto">
+          <i data-lucide="users" class="w-8 h-8 text-slate-400"></i>
+        </div>
+        <h4 class="font-serif font-bold text-lg text-slate-700">No Matched Profiles Found</h4>
+        <p class="text-sm text-slate-500 max-w-sm mx-auto">Try adjusting your filters or search keywords to view other candidates.</p>
+      </div>
+
+    </section>
+
+    <!-- ================= 2. PORTAL LOGIN / SIGNUP CARD ================= -->
+    <section id="view-login" class="hidden py-8">
+      <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl border border-cream-200 overflow-hidden">
+        
+        <!-- Tab Select Header -->
+        <div class="flex border-b border-cream-100">
+          <button id="tab-login" onclick="switchAuthTab('login')" class="w-1/2 text-center py-4 text-sm font-bold border-b-2 border-maroon-700 text-maroon-800 bg-cream-50/50">
+            Broker Login
+          </button>
+          <button id="tab-register" onclick="switchAuthTab('register')" class="w-1/2 text-center py-4 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 hover:bg-cream-50/10">
+            Broker Registration
+          </button>
+        </div>
+
+        <div class="p-6 md:p-8 space-y-6">
+          <div class="text-center space-y-1">
+            <h3 id="auth-title" class="font-serif font-bold text-2xl text-maroon-900">Broker Access Panel</h3>
+            <p id="auth-subtitle" class="text-xs text-slate-500">Independent marriage agents & bureaus login here</p>
+          </div>
+
+          <!-- Alert banner inside auth card -->
+          <div id="auth-alert" class="hidden p-3.5 rounded-lg text-xs font-semibold"></div>
+
+          <!-- LOGIN FORM -->
+          <form id="form-login" onsubmit="handleAuthLogin(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Registered Email Address</label>
+              <div class="relative">
+                <input type="email" id="login-email" required placeholder="name@domain.com" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+                <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Secret Password</label>
+              <div class="relative">
+                <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+                <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+              </div>
+            </div>
+            <button type="submit" class="w-full bg-maroon-800 hover:bg-maroon-900 text-white font-bold py-2.5 rounded-lg transition duration-200 shadow-md">
+              Secure Login
+            </button>
+          </form>
+
+          <!-- REGISTER FORM -->
+          <form id="form-register" onsubmit="handleAuthRegister(event)" class="hidden space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Full Name / Agency Name</label>
+              <div class="relative">
+                <input type="text" id="reg-name" required placeholder="E.g. Sharma Marriage Bureau" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Primary Email Address</label>
+              <div class="relative">
+                <input type="email" id="reg-email" required placeholder="name@domain.com" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+                <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">WhatsApp / Contact Phone Number</label>
+              <div class="relative">
+                <input type="tel" id="reg-phone" required placeholder="E.g. +91 9876543210" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+                <i data-lucide="phone" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Create Password</label>
+              <div class="relative">
+                <input type="password" id="reg-password" required placeholder="Minimum 6 characters" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+                <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+              </div>
+            </div>
+            <button type="submit" class="w-full bg-gold-600 hover:bg-gold-700 text-maroon-950 font-bold py-2.5 rounded-lg transition duration-200 shadow-md">
+              Submit Registration
+            </button>
+            <p class="text-[11px] text-center text-slate-400">All signups must be reviewed and approved manually by the platform owner/admin.</p>
+          </form>
+
+          <!-- Admin Quick Login Link -->
+          <div class="text-center border-t border-cream-100 pt-4">
+            <button onclick="fillAdminCredentials()" class="text-xs text-maroon-700 hover:text-maroon-900 font-semibold hover:underline">
+              🔧 Click here to Autofill Platform Owner/Admin Credentials
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 3. PLATFORM OWNER / ADMIN PANEL ================= -->
+    <section id="view-admin" class="hidden space-y-6">
+      
+      <!-- Admin Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-cream-200 shadow-sm">
+        <div>
+          <h2 class="font-serif font-bold text-2xl text-maroon-900 flex items-center gap-2">
+            <i data-lucide="settings" class="w-6 h-6 text-gold-600"></i> Platform Owner Administration Panel
+          </h2>
+          <p class="text-xs text-slate-500">Monitor registered brokers, toggle active status, and review global statistics</p>
+        </div>
+        <button onclick="handleLogout()" class="border border-red-200 text-red-600 hover:bg-red-50 font-bold px-4 py-2 rounded-lg text-sm transition flex items-center gap-2 self-start">
+          <i data-lucide="log-out" class="w-4 h-4"></i> Logout Admin
+        </button>
+      </div>
+
+      <!-- Live Performance Stats Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Stat Item 1 -->
+        <div class="bg-gradient-to-br from-white to-cream-50 p-5 rounded-xl border border-cream-200 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 bg-maroon-100 rounded-lg flex items-center justify-center text-maroon-800">
+            <i data-lucide="users-round" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wide">Total Brokers</span>
+            <span id="stat-total-brokers" class="block font-bold text-2xl text-slate-800">0</span>
+          </div>
+        </div>
+
+        <!-- Stat Item 2 -->
+        <div class="bg-gradient-to-br from-white to-cream-50 p-5 rounded-xl border border-cream-200 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-amber-800">
+            <i data-lucide="user-check" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wide">Pending Approvals</span>
+            <span id="stat-pending-brokers" class="block font-bold text-2xl text-amber-700">0</span>
+          </div>
+        </div>
+
+        <!-- Stat Item 3 -->
+        <div class="bg-gradient-to-br from-white to-cream-50 p-5 rounded-xl border border-cream-200 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-800">
+            <i data-lucide="heart" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wide">Total Profiles</span>
+            <span id="stat-total-profiles" class="block font-bold text-2xl text-slate-800">0</span>
+          </div>
+        </div>
+
+        <!-- Stat Item 4 -->
+        <div class="bg-gradient-to-br from-white to-cream-50 p-5 rounded-xl border border-cream-200 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-800">
+            <i data-lucide="credit-card" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <span class="block text-xs font-semibold text-slate-500 uppercase tracking-wide">Active Memberships</span>
+            <span id="stat-active-memberships" class="block font-bold text-2xl text-slate-800">0</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Broker Management Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-cream-200 overflow-hidden">
+        <div class="bg-cream-100/50 px-5 py-4 border-b border-cream-200 flex items-center justify-between">
+          <h3 class="font-serif font-bold text-lg text-maroon-900 flex items-center gap-2">
+            <i data-lucide="users" class="w-5 h-5 text-gold-600"></i> Marriage Brokers Directory
+          </h3>
+          <span class="text-xs bg-maroon-100 text-maroon-900 font-semibold px-2.5 py-1 rounded-full">Authorized Partners</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-cream-50 text-slate-500 font-semibold border-b border-cream-200">
+                <th class="py-3 px-4">Broker ID</th>
+                <th class="py-3 px-4">Agency / Broker Name</th>
+                <th class="py-3 px-4">Contact Info</th>
+                <th class="py-3 px-4 text-center">Status</th>
+                <th class="py-3 px-4 text-center">Membership</th>
+                <th class="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-brokers-tbody" class="divide-y divide-cream-100">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Admin - Global Profile Master Monitor -->
+      <div class="bg-white rounded-xl shadow-sm border border-cream-200 overflow-hidden">
+        <div class="bg-cream-100/50 px-5 py-4 border-b border-cream-200 flex items-center justify-between">
+          <h3 class="font-serif font-bold text-lg text-maroon-900 flex items-center gap-2">
+            <i data-lucide="eye" class="w-5 h-5 text-gold-600"></i> Global Master Profiles Reader (Read-Only)
+          </h3>
+          <div class="flex items-center gap-2">
+            <input type="text" id="admin-search-profiles" oninput="renderAdminProfiles()" placeholder="Search profiles..." class="bg-white border border-cream-200 rounded-lg py-1 px-3 text-xs focus:outline-none">
+          </div>
+        </div>
+        <div class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="admin-profiles-grid">
+          <!-- Dynamically loaded read-only profiles across all brokers -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= 4. BROKER DASHBOARD SECTION ================= -->
+    <section id="view-dashboard" class="hidden space-y-6">
+      
+      <!-- Broker Info Header Card -->
+      <div id="broker-profile-card" class="bg-white p-5 rounded-xl border border-cream-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 bg-gold-100 text-gold-800 rounded-full border border-gold-300 flex items-center justify-center font-display font-bold text-2xl shadow-inner">
+            B
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <h2 id="b-dashboard-name" class="font-serif font-bold text-xl text-maroon-900">Loading Broker Name...</h2>
+              <span id="b-dashboard-id" class="bg-maroon-100 text-maroon-900 text-xs font-bold px-2.5 py-0.5 rounded-full">BR-000</span>
+            </div>
+            <p id="b-dashboard-contact" class="text-xs text-slate-500">Email: - | WhatsApp: -</p>
+            <div class="flex items-center gap-2 pt-1">
+              <span id="b-badge-status" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold">Pending Status</span>
+              <span id="b-badge-membership" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold">Inactive Membership</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Add Candidate Profile Button -->
+          <button id="btn-add-profile" onclick="openAddProfileModal()" class="bg-maroon-800 hover:bg-maroon-900 text-white font-bold px-4 py-2.5 rounded-lg text-sm transition duration-200 shadow-md flex items-center gap-1.5">
+            <i data-lucide="user-plus" class="w-4 h-4"></i> Add Candidate (नया बायोडाटा)
+          </button>
+          <button onclick="handleLogout()" class="border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold px-4 py-2.5 rounded-lg text-sm transition duration-200 flex items-center gap-1.5">
+            <i data-lucide="log-out" class="w-4 h-4"></i> Logout Portal
+          </button>
+        </div>
+      </div>
+
+      <!-- Inactive Membership Notice Banner -->
+      <div id="broker-inactive-warning" class="hidden bg-red-50 border border-red-200 p-4 rounded-xl flex items-start gap-3">
+        <i data-lucide="alert-octagon" class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"></i>
+        <div class="space-y-1">
+          <h4 class="font-bold text-red-800 text-sm">Account Membership Deactivated / Non-Approved</h4>
+          <p class="text-xs text-red-700 leading-relaxed">
+            Your current membership status is marked as Deactivated or Pending. You can view your profiles, but adding new candidate biodatas, editing, or uploading photos is restricted. Please contact the platform Admin to activate your membership.
+          </p>
+        </div>
+      </div>
+
+      <!-- Candidate Profiles List Managed by Current Broker -->
+      <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h3 class="font-serif font-bold text-lg text-slate-800 flex items-center gap-2">
+            <i data-lucide="library" class="w-5 h-5 text-maroon-700"></i> Candidate Profiles Managed by You
+          </h3>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <input type="text" id="broker-search-candidates" oninput="renderBrokerProfiles()" placeholder="Search by name, caste..." class="w-full bg-white border border-cream-200 rounded-lg py-1.5 pl-8 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
+            </div>
+          </div>
+        </div>
+
+        <div id="broker-profiles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Broker's own candidate cards will mount here -->
+        </div>
+
+        <!-- Empty Candidate list state -->
+        <div id="broker-empty-state" class="hidden text-center py-12 bg-white rounded-xl border border-cream-200 space-y-3">
+          <div class="w-16 h-16 rounded-full bg-cream-100 flex items-center justify-center mx-auto">
+            <i data-lucide="folder-open" class="w-8 h-8 text-slate-400"></i>
+          </div>
+          <h4 class="font-serif font-bold text-lg text-slate-700">No Candidate Profiles Added Yet</h4>
+          <p class="text-sm text-slate-500 max-w-sm mx-auto">Start building your matchmaking ledger by creating your first candidate profile card.</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= PRINT SYSTEM OVERLAY CONTAINER ================= -->
+  <!-- This is absolutely hidden during normal rendering, but visible during print -->
+  <div id="print-biodata-container" class="hidden"></div>
+
+  <!-- ================================================================= -->
+  <!-- ==================== DIALOGS & OVERLAY MODALS ==================== -->
+  <!-- ================================================================= -->
+
+  <!-- ============ A. PRINT FRIENDLY BIODATA MODAL ============ -->
+  <div id="modal-biodata" class="fixed inset-0 bg-slate-900/65 flex items-center justify-center p-4 z-50 hidden no-print overflow-y-auto">
+    <div class="bg-white rounded-2xl border-2 border-gold-500 w-full max-w-2xl overflow-hidden shadow-2xl relative my-8">
+      
+      <!-- Modal Action Header -->
+      <div class="bg-maroon-900 text-white px-5 py-3.5 flex items-center justify-between border-b border-gold-400 no-print">
+        <h4 class="font-serif font-bold tracking-wide">Candidate Printable Biodata View</h4>
+        <button onclick="closeModal('modal-biodata')" class="text-gold-200 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <!-- Printable Card Content -->
+      <div id="biodata-modal-body" class="p-6 md:p-8 overflow-y-auto max-h-[75vh]">
+        <!-- Full biodata template will render here dynamically -->
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="bg-cream-100 px-6 py-4 flex flex-wrap items-center justify-end gap-3 border-t border-cream-200 no-print">
+        <button id="biodata-wa-share" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-lg text-sm transition flex items-center gap-1.5 shadow">
+          <i data-lucide="message-square" class="w-4 h-4"></i> Share on WhatsApp
+        </button>
+        <button onclick="printBiodata()" class="bg-maroon-800 hover:bg-maroon-900 text-white font-bold px-4 py-2 rounded-lg text-sm transition flex items-center gap-1.5 shadow">
+          <i data-lucide="printer" class="w-4 h-4"></i> Print / Save PDF
+        </button>
+        <button onclick="closeModal('modal-biodata')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-4 py-2 rounded-lg text-sm transition">
+          Close View
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ B. ADD/EDIT CANDIDATE FORM SLIDE-OVER MODAL ============ -->
+  <div id="modal-candidate-form" class="fixed inset-0 bg-slate-900/65 flex items-center justify-center p-4 z-50 hidden no-print overflow-y-auto">
+    <div class="bg-white rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl relative border border-cream-200 my-8">
+      
+      <div class="bg-maroon-900 text-white px-6 py-4 flex items-center justify-between">
+        <h4 id="form-candidate-title" class="font-serif font-bold text-lg">Add Candidate Profile (बायोडाटा फॉर्म)</h4>
+        <button onclick="closeModal('modal-candidate-form')" class="text-gold-100 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <!-- Form Body -->
+      <form id="form-candidate" onsubmit="handleSaveCandidate(event)" class="p-6 md:p-8 space-y-6 overflow-y-auto max-h-[75vh]">
+        <input type="hidden" id="form-profile-id">
+
+        <!-- 1. General & Personal Info -->
+        <div class="space-y-4">
+          <h5 class="text-sm font-bold text-maroon-800 border-b border-cream-200 pb-1.5 uppercase tracking-wider">1. Candidate Information</h5>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Full Candidate Name *</label>
+              <input type="text" id="form-candidate-name" required placeholder="E.g. Sneha Patel" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Gender (लिंग) *</label>
+              <select id="form-candidate-gender" required class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+                <option value="bride">Bride (वधू)</option>
+                <option value="groom">Groom (वर)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Marital Status *</label>
+              <select id="form-candidate-marital" required class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+                <option value="Never Married">Never Married (अविवाहित)</option>
+                <option value="Divorced">Divorced (तलाकशुदा)</option>
+                <option value="Widow / Widower">Widow / Widower (विधवा / विधुर)</option>
+                <option value="Awaiting Divorce">Awaiting Divorce</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Age (उम्र) *</label>
+              <input type="number" id="form-candidate-age" min="18" max="75" required placeholder="E.g. 25" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Height (ऊंचाई) *</label>
+              <input type="text" id="form-candidate-height" required placeholder="E.g. 5'5&quot; or 165 cm" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Religion (धर्म) *</label>
+              <input type="text" id="form-candidate-religion" required placeholder="E.g. Hindu, Sikh" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Caste (जाति) *</label>
+              <input type="text" id="form-candidate-caste" required placeholder="E.g. Brahmin, Jat (or No Bar)" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Academic & Occupational details -->
+        <div class="space-y-4">
+          <h5 class="text-sm font-bold text-maroon-800 border-b border-cream-200 pb-1.5 uppercase tracking-wider">2. Education & Professional Details</h5>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Education / Qualification *</label>
+              <input type="text" id="form-candidate-education" required placeholder="E.g. B.Tech CS, MBA, B.Com" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Occupation / Profession *</label>
+              <input type="text" id="form-candidate-occupation" required placeholder="E.g. Software Engineer, Business Owner" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Annual Income *</label>
+              <input type="text" id="form-candidate-income" required placeholder="E.g. 15 LPA, 8 Lakhs, Business" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Location & Hidden Contacts -->
+        <div class="space-y-4">
+          <h5 class="text-sm font-bold text-maroon-800 border-b border-cream-200 pb-1.5 uppercase tracking-wider">3. Location & Confidential Contact Details</h5>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Current City *</label>
+              <input type="text" id="form-candidate-city" required placeholder="E.g. Delhi" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">State *</label>
+              <input type="text" id="form-candidate-state" required placeholder="E.g. Delhi NCR" class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500">
+            </div>
+            <div class="bg-amber-50 p-3 rounded-xl border border-amber-200">
+              <label class="block text-xs font-bold text-amber-900 mb-1 flex items-center gap-1">
+                <i data-lucide="eye-off" class="w-3.5 h-3.5 text-amber-600"></i> Family Contact Phone *
+              </label>
+              <input type="tel" id="form-candidate-phone" required placeholder="E.g. +91 9898989898" class="w-full bg-white border border-amber-300 rounded-lg py-1.5 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-maroon-500">
+              <span class="text-[9px] text-amber-800 block mt-1 leading-tight">Highly Confidential! Visible ONLY to you, the managing broker. Never shown to public.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Text Overviews -->
+        <div class="space-y-4">
+          <h5 class="text-sm font-bold text-maroon-800 border-b border-cream-200 pb-1.5 uppercase tracking-wider">4. Candidate & Family Background Overview</h5>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">About the Candidate *</label>
+              <textarea id="form-candidate-about" required rows="3" placeholder="Briefly describe the candidate's personality, hobbies, life style etc..." class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500"></textarea>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Family & Relatives Background *</label>
+              <textarea id="form-candidate-family" required rows="3" placeholder="Father, mother profession, siblings, and family origin details..." class="w-full bg-cream-50 border border-cream-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon-500"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Photo Manager -->
+        <div class="space-y-4">
+          <h5 class="text-sm font-bold text-maroon-800 border-b border-cream-200 pb-1.5 uppercase tracking-wider">5. Candidate Photographs</h5>
+          <div class="bg-cream-50 border-2 border-dashed border-cream-300 p-5 rounded-xl text-center space-y-3">
+            <i data-lucide="image" class="w-10 h-10 text-slate-400 mx-auto"></i>
+            <div>
+              <label class="inline-block bg-maroon-800 hover:bg-maroon-900 text-white font-semibold text-xs px-4 py-2 rounded-lg cursor-pointer transition">
+                Browse Files
+                <input type="file" id="form-candidate-images" multiple accept="image/*" onchange="handleFormImageUpload(event)" class="hidden">
+              </label>
+              <p class="text-[11px] text-slate-400 mt-2">Upload one or multiple photos. Images are automatically auto-compressed to preserve storage space.</p>
+            </div>
+            <div id="form-image-preview-container" class="flex flex-wrap gap-3 justify-center pt-2">
+              <!-- Upload previews will inject here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Panel -->
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-cream-100">
+          <button type="button" onclick="closeModal('modal-candidate-form')" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold px-5 py-2.5 rounded-lg text-sm transition">
+            Cancel
+          </button>
+          <button type="submit" class="bg-maroon-800 hover:bg-maroon-900 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition shadow">
+            Save Biodata Card
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ C. FIREBASE SETUP INSTRUCTIONS OVERLAY MODAL ============ -->
+  <div id="modal-setup" class="fixed inset-0 bg-slate-900/65 flex items-center justify-center p-4 z-50 hidden no-print overflow-y-auto">
+    <div class="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative border border-cream-200 my-8">
+      
+      <div class="bg-maroon-900 text-white px-5 py-4 flex items-center justify-between">
+        <h4 class="font-serif font-bold text-lg flex items-center gap-1.5"><i data-lucide="database" class="w-5 h-5 text-gold-400"></i> Cloud Firebase Setup Instructions</h4>
+        <button onclick="closeModal('modal-setup')" class="text-gold-200 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="p-6 space-y-4 text-sm leading-relaxed overflow-y-auto max-h-[75vh]">
+        <p class="font-medium text-slate-700">Connect this applet directly to a live Google Cloud Firebase Project by following these quick steps:</p>
+        
+        <ol class="list-decimal pl-5 space-y-2.5 text-slate-600">
+          <li>Go to the <a href="https://console.firebase.google.com/" target="_blank" class="text-maroon-700 font-semibold underline">Firebase Console</a> and click <strong>Add Project</strong>.</li>
+          <li>Once created, select the web platform icon <code>&lt;/&gt;</code> to register a new Web App.</li>
+          <li>Copy your unique <code>firebaseConfig</code> credentials from the setup screen.</li>
+          <li>Open this file (<code>index.html</code>) in your code editor and look for the <code>firebaseConfig</code> constant variable near the very top of the script tag (around line 520).</li>
+          <li>Replace the default configuration values with your actual Firebase API keys:</li>
+        </ol>
+
+        <pre class="bg-slate-800 text-gold-200 text-xs p-4 rounded-xl overflow-x-auto">
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "your-project-id.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project-id.appspot.com",
+  messagingSenderId: "your-sender-id",
+  appId: "your-app-id"
+};</pre>
+
+        <p class="font-semibold text-maroon-800 pt-2 border-t border-cream-100">Deploying to GitHub Pages:</p>
+        <p class="text-slate-600 text-xs">
+          Simply push this single, fully self-contained <code>index.html</code> file to a public GitHub repository. Navigate to your Repository Settings &gt; Pages, and enable deployment from your main branch. Your site will instantly go live around the world for free!
+        </p>
+      </div>
+
+      <div class="bg-cream-100 px-5 py-3.5 flex justify-end border-t border-cream-200">
+        <button onclick="closeModal('modal-setup')" class="bg-maroon-800 hover:bg-maroon-900 text-white font-bold px-5 py-2 rounded-lg text-sm transition">
+          Got It!
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-maroon-950 text-cream-100 py-8 border-t-2 border-gold-600 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <h4 class="font-display font-bold text-gold-400 tracking-widest text-sm uppercase">MUJH SE SHADI KAROGEY</h4>
+      <p class="text-xs text-cream-200/80 max-w-md mx-auto leading-relaxed">
+        An advanced, high-performance platform empowering independent matrimonial brokers to digitalize their client ledger biodatas elegantly.
+      </p>
+      <div class="text-[10px] text-cream-300/60 border-t border-maroon-900 pt-4 flex flex-wrap justify-between items-center gap-2">
+        <span>© 2026 MUJH SE SHADI KAROGEY. Crafted with extreme precision.</span>
+        <span>Made for local bureaus & matching agents globally.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================================================================= -->
+  <!-- ==================== CORE JAVASCRIPT SYSTEM ==================== -->
+  <!-- ================================================================= -->
+  <script>
+
+    // ==========================================================
+    // 1. FIREBASE CONFIGURATION (REPLACE WITH YOUR KEYS HERE)
+    // ==========================================================
+    const firebaseConfig = {
+      apiKey: "PLACEHOLDER_API_KEY",
+      authDomain: "PLACEHOLDER_AUTH_DOMAIN",
+      projectId: "PLACEHOLDER_PROJECT_ID",
+      storageBucket: "PLACEHOLDER_STORAGE_BUCKET",
+      messagingSenderId: "PLACEHOLDER_MESSAGING_SENDER_ID",
+      appId: "PLACEHOLDER_APP_ID"
+    };
+
+    // Global Admin Credentials Config (Owner Role)
+    const ADMIN_EMAIL = "admin@shadi.com";
+    const ADMIN_PASSWORD = "AdminPassword123";
+
+    // Global App State
+    let appState = {
+      isFirebaseActive: false,
+      currentUser: null,       // Logged in broker or admin email
+      currentUserRole: 'guest', // 'guest', 'broker', 'admin'
+      currentBrokerInfo: null,  // Database entry for current broker
+      activeSection: 'home',
+      brokers: [],              // Full list of brokers
+      profiles: [],             // Full list of candidate biodatas
+      filters: {
+        gender: 'all',
+        religion: 'all',
+        age: 'all',
+        location: '',
+        keyword: ''
+      }
+    };
+
+    // Temporary upload images cache
+    let formUploadedImagesBase64 = [];
+
+    // ==========================================================
+    // 2. DUAL-MODE DETECTION & INITIALIZATION
+    // ==========================================================
+    function initializeAppSystem() {
+      // Check if config has placeholders or real keys
+      const isPlaceholder = !firebaseConfig.apiKey || firebaseConfig.apiKey.includes("PLACEHOLDER");
+      
+      if (!isPlaceholder) {
+        try {
+          firebase.initializeApp(firebaseConfig);
+          appState.isFirebaseActive = true;
+          document.getElementById('mode-banner').innerHTML = `
+            <div class="flex items-center gap-2 mx-auto">
+              <i data-lucide="globe" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
+              <span>Live Cloud Active: Connected securely to <strong>Google Cloud Firebase</strong> (Firestore + Auth).</span>
+            </div>
+            <button onclick="document.getElementById('mode-banner').remove()" class="text-amber-700 hover:text-amber-900"><i data-lucide="x" class="w-4 h-4"></i></button>
+          `;
+          
+          // Setup Real-time Listeners
+          listenFirebaseData();
+        } catch (error) {
+          console.error("Firebase setup failed, defaulting to LocalStorage fallback:", error);
+          startLocalStorageMode();
+        }
+      } else {
+        startLocalStorageMode();
+      }
+
+      // Initialize UI, Icons and Router
+      lucide.createIcons();
+      navigateTo('home');
+      restoreLocalSession();
+    }
+
+    // Initialize in Local Storage Mode
+    function startLocalStorageMode() {
+      appState.isFirebaseActive = false;
+      document.getElementById('mode-banner').classList.remove('hidden');
+      
+      // Initialize Seed Data if missing
+      seedLocalDataIfEmpty();
+      
+      // Load Local Storage Data
+      loadLocalStateData();
+    }
+
+    // ==========================================================
+    // 3. STORAGE & CRUD ADAPTER (FIREBASE VS LOCAL STORAGE)
+    // ==========================================================
+    
+    // Seed Authentic Candidates & Brokers
+    function seedLocalDataIfEmpty() {
+      if (!localStorage.getItem('mssk_brokers')) {
+        const seedBrokers = [
+          {
+            uid: "broker_sharma",
+            brokerId: "BR-001",
+            name: "Sharma Matrimonial Bureau",
+            email: "sharma@broker.com",
+            phone: "+91 98765 43210",
+            status: "approved",
+            membershipStatus: "active",
+            createdAt: new Date().toISOString()
+          },
+          {
+            uid: "broker_siddiqui",
+            brokerId: "BR-002",
+            name: "Siddiqui Marriage Hub",
+            email: "siddiqui@broker.com",
+            phone: "+91 88776 65544",
+            status: "approved",
+            membershipStatus: "active",
+            createdAt: new Date().toISOString()
+          },
+          {
+            uid: "broker_patel",
+            brokerId: "BR-003",
+            name: "Patel Alliances Agency",
+            email: "patel@broker.com",
+            phone: "+91 76543 21098",
+            status: "pending",
+            membershipStatus: "deactivated",
+            createdAt: new Date().toISOString()
+          }
+        ];
+        localStorage.setItem('mssk_brokers', JSON.stringify(seedBrokers));
+      }
+
+      if (!localStorage.getItem('mssk_profiles')) {
+        const seedProfiles = [
+          {
+            id: "prof_1",
+            brokerUid: "broker_sharma",
+            brokerId: "BR-001",
+            fullName: "Aarav Sharma",
+            gender: "groom",
+            age: 28,
+            height: "5'11\"",
+            religion: "Hindu",
+            caste: "Brahmin",
+            education: "M.Tech in Computer Science (IIT Bombay)",
+            occupation: "Senior Software Engineer at Google",
+            income: "32 LPA",
+            city: "Bengaluru",
+            state: "Karnataka",
+            maritalStatus: "Never Married",
+            about: "Aarav is an ambitious, down-to-earth person who loves hiking, landscape photography, and classical Indian flute. He maintains deep cultural family roots while possessing a modern worldview.",
+            familyDetails: "Father is a retired bank manager, mother is a caring homemaker. Younger sister is pursuing her MBA in Pune.",
+            phone: "+91 99001 22334",
+            photos: ["https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop"],
+            createdAt: new Date().toISOString()
+          },
+          {
+            id: "prof_2",
+            brokerUid: "broker_sharma",
+            brokerId: "BR-001",
+            fullName: "Priya Patel",
+            gender: "bride",
+            age: 26,
+            height: "5'4\"",
+            religion: "Hindu",
+            caste: "Patel",
+            education: "Doctor of Medicine (MD)",
+            occupation: "Consultant Pediatrician at Apollo",
+            income: "18 LPA",
+            city: "Ahmedabad",
+            state: "Gujarat",
+            maritalStatus: "Never Married",
+            about: "Priya is an energetic individual devoted to pediatric health. She enjoys watercolor painting, traditional cooking, and traveling to unexplored spiritual places.",
+            familyDetails: "Parents are prominent chemical industry owners in Gujarat. Younger brother is pursuing MS in mechanical engineering in UK.",
+            phone: "+91 88776 54321",
+            photos: ["https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop"],
+            createdAt: new Date().toISOString()
+          },
+          {
+            id: "prof_3",
+            brokerUid: "broker_siddiqui",
+            brokerId: "BR-002",
+            fullName: "Farhan Siddiqui",
+            gender: "groom",
+            age: 30,
+            height: "5'10\"",
+            religion: "Muslim",
+            caste: "Sheikh",
+            education: "MBA in Finance",
+            occupation: "Investment Banker at HSBC",
+            income: "24 LPA",
+            city: "Mumbai",
+            state: "Maharashtra",
+            maritalStatus: "Never Married",
+            about: "Farhan is career-focused yet maintains a beautiful balance with his spiritual duties. Enjoys physical fitness, writing urdu poetry, and watching historical documentaries.",
+            familyDetails: "Father serves as a senior advocate in Mumbai High Court, mother is a retired school principal. One married elder sister.",
+            phone: "+91 98223 34455",
+            photos: ["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop"],
+            createdAt: new Date().toISOString()
+          },
+          {
+            id: "prof_4",
+            brokerUid: "broker_siddiqui",
+            brokerId: "BR-002",
+            fullName: "Harpreet Kaur",
+            gender: "bride",
+            age: 27,
+            height: "5'6\"",
+            religion: "Sikh",
+            caste: "Jat Sikh",
+            education: "B.Des from NIFT Delhi",
+            occupation: "Boutique Owner & Designer",
+            income: "14 LPA",
+            city: "Chandigarh",
+            state: "Punjab",
+            maritalStatus: "Never Married",
+            about: "Harpreet is creative, vivacious, and deeply kind. She loves baking, organic gardening, and hosting cozy family get-togethers.",
+            familyDetails: "Father owns modern agricultural farmland in Punjab, mother is a high school mathematics teacher. Elder brother settled in Canada.",
+            phone: "+91 77665 54433",
+            photos: ["https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop"],
+            createdAt: new Date().toISOString()
+          }
+        ];
+        localStorage.setItem('mssk_profiles', JSON.stringify(seedProfiles));
+      }
+    }
+
+    // Load State from Local Storage
+    function loadLocalStateData() {
+      appState.brokers = JSON.parse(localStorage.getItem('mssk_brokers')) || [];
+      appState.profiles = JSON.parse(localStorage.getItem('mssk_profiles')) || [];
+      applyFilters();
+    }
+
+    // Synchronize to Local Storage
+    function saveLocalStateToStorage() {
+      localStorage.setItem('mssk_brokers', JSON.stringify(appState.brokers));
+      localStorage.setItem('mssk_profiles', JSON.stringify(appState.profiles));
+    }
+
+    // Real-time listener for Firestore if configured
+    function listenFirebaseData() {
+      const db = firebase.firestore();
+      
+      // Listen to brokers collection
+      db.collection("brokers").onSnapshot((snapshot) => {
+        appState.brokers = [];
+        snapshot.forEach((doc) => {
+          appState.brokers.push({ uid: doc.id, ...doc.data() });
+        });
+        updateDashboardInfo();
+        applyFilters();
+        renderAdminBrokers();
+      });
+
+      // Listen to profiles collection
+      db.collection("profiles").onSnapshot((snapshot) => {
+        appState.profiles = [];
+        snapshot.forEach((doc) => {
+          appState.profiles.push({ id: doc.id, ...doc.data() });
+        });
+        updateDashboardInfo();
+        applyFilters();
+        renderAdminProfiles();
+      });
+    }
+
+    // Save Data Adapter (Works Transparently for Both Modes)
+    async function saveBrokerToDB(brokerData) {
+      if (appState.isFirebaseActive) {
+        const db = firebase.firestore();
+        await db.collection("brokers").doc(brokerData.uid).set(brokerData);
+      } else {
+        const index = appState.brokers.findIndex(b => b.uid === brokerData.uid);
+        if (index > -1) {
+          appState.brokers[index] = brokerData;
+        } else {
+          appState.brokers.push(brokerData);
+        }
+        saveLocalStateToStorage();
+        updateDashboardInfo();
+        applyFilters();
+        renderAdminBrokers();
+      }
+    }
+
+    async function saveProfileToDB(profileData) {
+      if (appState.isFirebaseActive) {
+        const db = firebase.firestore();
+        if (profileData.id) {
+          await db.collection("profiles").doc(profileData.id).set(profileData);
+        } else {
+          const newDocRef = db.collection("profiles").doc();
+          profileData.id = newDocRef.id;
+          await newDocRef.set(profileData);
+        }
+      } else {
+        if (profileData.id) {
+          const index = appState.profiles.findIndex(p => p.id === profileData.id);
+          if (index > -1) {
+            appState.profiles[index] = profileData;
+          }
+        } else {
+          profileData.id = 'prof_' + Date.now();
+          appState.profiles.push(profileData);
+        }
+        saveLocalStateToStorage();
+        updateDashboardInfo();
+        applyFilters();
+      }
+    }
+
+    async function deleteProfileFromDB(profileId) {
+      if (appState.isFirebaseActive) {
+        const db = firebase.firestore();
+        await db.collection("profiles").doc(profileId).delete();
+      } else {
+        appState.profiles = appState.profiles.filter(p => p.id !== profileId);
+        saveLocalStateToStorage();
+        updateDashboardInfo();
+        applyFilters();
+      }
+    }
+
+    // ==========================================================
+    // 4. ROUTER & CONTROLLER (PAGE NAVIGATION)
+    // ==========================================================
+    function navigateTo(sectionId) {
+      // Hide all main section containers
+      document.getElementById('view-home').classList.add('hidden');
+      document.getElementById('view-login').classList.add('hidden');
+      document.getElementById('view-admin').classList.add('hidden');
+      document.getElementById('view-dashboard').classList.add('hidden');
+
+      // Remove active-nav underline styling
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-gold-300', 'border-gold-500');
+        btn.classList.add('border-transparent');
+      });
+
+      appState.activeSection = sectionId;
+
+      // Conditional rendering & redirect rules
+      if (sectionId === 'home') {
+        document.getElementById('view-home').classList.remove('hidden');
+        document.getElementById('nav-home').classList.add('text-gold-300', 'border-gold-500');
+        applyFilters();
+      } 
+      else if (sectionId === 'dashboard') {
+        if (!appState.currentUser) {
+          // Send to login/register card first
+          document.getElementById('view-login').classList.remove('hidden');
+          switchAuthTab('login');
+        } else if (appState.currentUserRole === 'admin') {
+          navigateTo('admin');
+        } else {
+          document.getElementById('view-dashboard').classList.remove('hidden');
+          document.getElementById('nav-dashboard').classList.add('text-gold-300', 'border-gold-500');
+          updateDashboardInfo();
+        }
+      } 
+      else if (sectionId === 'admin') {
+        if (appState.currentUserRole === 'admin') {
+          document.getElementById('view-admin').classList.remove('hidden');
+          document.getElementById('nav-admin').classList.add('text-gold-300', 'border-gold-500');
+          renderAdminPanel();
+        } else {
+          document.getElementById('view-login').classList.remove('hidden');
+          switchAuthTab('login');
+          fillAdminCredentials();
+          showAuthAlert("🔧 Please authenticate as Administrator to access this system.", "bg-amber-50 text-amber-900 border border-amber-300");
+        }
+      }
+
+      // Sync menu icons to show/hide dynamic header updates
+      updateUserPanelHeader();
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // ==========================================================
+    // 5. AUTHENTICATION & SESSION CONTROLS
+    // ==========================================================
+    function switchAuthTab(tab) {
+      const loginForm = document.getElementById('form-login');
+      const registerForm = document.getElementById('form-register');
+      const tabLogin = document.getElementById('tab-login');
+      const tabRegister = document.getElementById('tab-register');
+      const authTitle = document.getElementById('auth-title');
+      const authSubtitle = document.getElementById('auth-subtitle');
+
+      hideAuthAlert();
+
+      if (tab === 'login') {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+        tabLogin.className = "w-1/2 text-center py-4 text-sm font-bold border-b-2 border-maroon-700 text-maroon-800 bg-cream-50/50";
+        tabRegister.className = "w-1/2 text-center py-4 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 hover:bg-cream-50/10";
+        authTitle.innerText = "Broker Access Panel";
+        authSubtitle.innerText = "Independent marriage agents & bureaus login here";
+      } else {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        tabLogin.className = "w-1/2 text-center py-4 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 hover:bg-cream-50/10";
+        tabRegister.className = "w-1/2 text-center py-4 text-sm font-bold border-b-2 border-gold-600 text-gold-700 bg-cream-50/50";
+        authTitle.innerText = "Broker Registration";
+        authSubtitle.innerText = "Register your matching agency to upload candidate biodatas";
+      }
+    }
+
+    function showAuthAlert(message, bgClass) {
+      const alert = document.getElementById('auth-alert');
+      alert.innerText = message;
+      alert.className = `p-3.5 rounded-lg text-xs font-semibold ${bgClass}`;
+      alert.classList.remove('hidden');
+    }
+
+    function hideAuthAlert() {
+      document.getElementById('auth-alert').classList.add('hidden');
+    }
+
+    function fillAdminCredentials() {
+      document.getElementById('login-email').value = ADMIN_EMAIL;
+      document.getElementById('login-password').value = ADMIN_PASSWORD;
+      showAuthAlert("🔧 Press 'Secure Login' to access administrative system.", "bg-blue-50 text-blue-900 border border-blue-300");
+    }
+
+    // Broker / Admin Sign In Action
+    async function handleAuthLogin(e) {
+      e.preventDefault();
+      hideAuthAlert();
+      
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        // Log in as Platform Administrator
+        appState.currentUser = email;
+        appState.currentUserRole = 'admin';
+        appState.currentBrokerInfo = null;
+        saveLocalSession();
+        navigateTo('admin');
+        return;
+      }
+
+      // Check broker credentials
+      if (appState.isFirebaseActive) {
+        try {
+          const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+          const brokerUid = userCredential.user.uid;
+          
+          // Get additional document details from Firestore
+          const doc = await firebase.firestore().collection("brokers").doc(brokerUid).get();
+          if (doc.exists) {
+            const bInfo = doc.data();
+            bInfo.uid = doc.id;
+            
+            appState.currentUser = email;
+            appState.currentUserRole = 'broker';
+            appState.currentBrokerInfo = bInfo;
+            saveLocalSession();
+            navigateTo('dashboard');
+          } else {
+            showAuthAlert("Broker records not found in Firestore.", "bg-red-50 text-red-900 border border-red-300");
+          }
+        } catch (err) {
+          showAuthAlert(err.message, "bg-red-50 text-red-900 border border-red-300");
+        }
+      } else {
+        // Local fallback authentication
+        const match = appState.brokers.find(b => b.email === email);
+        if (match) {
+          appState.currentUser = email;
+          appState.currentUserRole = 'broker';
+          appState.currentBrokerInfo = match;
+          saveLocalSession();
+          navigateTo('dashboard');
+        } else {
+          showAuthAlert("Unauthorized Broker! Email address not registered in system.", "bg-red-50 text-red-900 border border-red-300");
+        }
+      }
+    }
+
+    // Broker Self Registration System
+    async function handleAuthRegister(e) {
+      e.preventDefault();
+      hideAuthAlert();
+
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const password = document.getElementById('reg-password').value;
+
+      if (email === ADMIN_EMAIL) {
+        showAuthAlert("Invalid Email. This address is reserved for system administration.", "bg-red-50 text-red-900 border border-red-300");
+        return;
+      }
+
+      // Check if duplicate email
+      const isEmailDuplicate = appState.brokers.some(b => b.email.toLowerCase() === email.toLowerCase());
+      if (isEmailDuplicate) {
+        showAuthAlert("This email address is already registered in our system.", "bg-amber-50 text-amber-900 border border-amber-300");
+        return;
+      }
+
+      const newBrokerDoc = {
+        name: name,
+        email: email,
+        phone: phone,
+        status: 'pending',              // Pending manual Admin approval
+        membershipStatus: 'deactivated', // Membership inactivated
+        createdAt: new Date().toISOString()
+      };
+
+      if (appState.isFirebaseActive) {
+        try {
+          const authResult = await firebase.auth().createUserWithEmailAndPassword(email, password);
+          newBrokerDoc.uid = authResult.user.uid;
+          await saveBrokerToDB(newBrokerDoc);
+          
+          showAuthAlert("Registration Successful! Your broker profile is pending validation. Contact the platform Owner to activate your Broker ID.", "bg-emerald-50 text-emerald-900 border border-emerald-300");
+          switchAuthTab('login');
+        } catch (err) {
+          showAuthAlert(err.message, "bg-red-50 text-red-900 border border-red-300");
+        }
+      } else {
+        // Local fallback register
+        newBrokerDoc.uid = 'broker_' + Date.now();
+        await saveBrokerToDB(newBrokerDoc);
+        
+        showAuthAlert("Registration Submitted! Your offline broker profile status is marked 'Pending'. Navigate to Admin Panel to Approve and assign Broker ID.", "bg-emerald-50 text-emerald-900 border border-emerald-300");
+        switchAuthTab('login');
+      }
+    }
+
+    // Terminate Session
+    function handleLogout() {
+      if (appState.isFirebaseActive) {
+        firebase.auth().signOut().then(() => {
+          clearLocalSession();
+        });
+      } else {
+        clearLocalSession();
+      }
+    }
+
+    function saveLocalSession() {
+      localStorage.setItem('mssk_session', JSON.stringify({
+        email: appState.currentUser,
+        role: appState.currentUserRole,
+        brokerInfo: appState.currentBrokerInfo
+      }));
+      updateUserPanelHeader();
+    }
+
+    function restoreLocalSession() {
+      const session = JSON.parse(localStorage.getItem('mssk_session'));
+      if (session) {
+        appState.currentUser = session.email;
+        appState.currentUserRole = session.role;
+        appState.currentBrokerInfo = session.brokerInfo;
+        updateUserPanelHeader();
+      }
+    }
+
+    function clearLocalSession() {
+      appState.currentUser = null;
+      appState.currentUserRole = 'guest';
+      appState.currentBrokerInfo = null;
+      localStorage.removeItem('mssk_session');
+      updateUserPanelHeader();
+      navigateTo('home');
+    }
+
+    // Header updates dynamically
+    function updateUserPanelHeader() {
+      const dPanel = document.getElementById('header-user-panel');
+      const mPanel = document.getElementById('mobile-user-panel');
+      
+      let html = '';
+      let mHtml = '';
+
+      if (appState.currentUser) {
+        const displayName = appState.currentUserRole === 'admin' ? "Platform Owner" : (appState.currentBrokerInfo ? appState.currentBrokerInfo.brokerId || 'BR-Pending' : 'Broker');
+        html = `
+          <div class="flex items-center gap-3">
+            <div class="text-right">
+              <span class="block text-xs font-bold text-gold-300">${displayName}</span>
+              <span class="block text-[10px] text-cream-200">${appState.currentUser}</span>
+            </div>
+            <button onclick="handleLogout()" class="bg-maroon-800 hover:bg-maroon-700 text-cream-50 font-bold px-3.5 py-1.5 rounded-lg text-xs transition duration-200 shadow-inner flex items-center gap-1">
+              <i data-lucide="log-out" class="w-3.5 h-3.5 text-gold-300"></i> Logout
+            </button>
+          </div>
+        `;
+        mHtml = `
+          <div class="p-3 bg-maroon-900 rounded-lg space-y-2">
+            <div class="text-sm">
+              <span class="block font-bold text-gold-300">${displayName}</span>
+              <span class="block text-xs text-cream-200">${appState.currentUser}</span>
+            </div>
+            <button onclick="handleLogout()" class="w-full bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-3 rounded text-xs transition duration-200 flex items-center justify-center gap-2">
+              <i data-lucide="log-out" class="w-4 h-4"></i> Sign Out
+            </button>
+          </div>
+        `;
+      } else {
+        html = `
+          <button onclick="navigateTo('dashboard')" class="bg-gold-500 hover:bg-gold-600 text-maroon-950 font-bold px-4 py-2 rounded-lg text-xs transition duration-200 shadow-md flex items-center gap-1">
+            <i data-lucide="user" class="w-3.5 h-3.5"></i> Broker Entrance
+          </button>
+        `;
+        mHtml = `
+          <button onclick="navigateTo('dashboard'); toggleMobileMenu()" class="w-full bg-gold-500 hover:bg-gold-600 text-maroon-950 font-bold py-2.5 rounded-lg text-sm transition duration-200 shadow-md flex items-center justify-center gap-2">
+            <i data-lucide="user" class="w-4 h-4"></i> Broker Entrance
+          </button>
+        `;
+      }
+
+      dPanel.innerHTML = html;
+      mPanel.innerHTML = mHtml;
+      lucide.createIcons();
+    }
+
+
+    // ==========================================================
+    // 6. PUBLIC PUBLIC DIR SEARCH & FILTER SYSTEM
+    // ==========================================================
+    function resetFilters() {
+      document.getElementById('filter-gender').value = 'all';
+      document.getElementById('filter-religion').value = 'all';
+      document.getElementById('filter-age').value = 'all';
+      document.getElementById('filter-location').value = '';
+      document.getElementById('filter-keyword').value = '';
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const gender = document.getElementById('filter-gender').value;
+      const religion = document.getElementById('filter-religion').value;
+      const ageGroup = document.getElementById('filter-age').value;
+      const location = document.getElementById('filter-location').value.trim().toLowerCase();
+      const keyword = document.getElementById('filter-keyword').value.trim().toLowerCase();
+
+      appState.filters = { gender, religion, age: ageGroup, location, keyword };
+
+      // Filter global profiles
+      const filtered = appState.profiles.filter(profile => {
+        // Filter by gender
+        if (gender !== 'all' && profile.gender !== gender) return false;
+
+        // Filter by religion
+        if (religion !== 'all' && profile.religion.toLowerCase() !== religion.toLowerCase()) return false;
+
+        // Filter by age group
+        if (ageGroup !== 'all') {
+          const age = parseInt(profile.age);
+          if (ageGroup === '18-25' && (age < 18 || age > 25)) return false;
+          if (ageGroup === '26-32' && (age < 26 || age > 32)) return false;
+          if (ageGroup === '33-40' && (age < 33 || age > 40)) return false;
+          if (ageGroup === '40+' && age <= 40) return false;
+        }
+
+        // Filter by location
+        if (location) {
+          const c = profile.city.toLowerCase();
+          const s = profile.state.toLowerCase();
+          if (!c.includes(location) && !s.includes(location)) return false;
+        }
+
+        // Filter by keyword (Caste, occupation, education etc)
+        if (keyword) {
+          const cas = profile.caste.toLowerCase();
+          const edu = profile.education.toLowerCase();
+          const occ = profile.occupation.toLowerCase();
+          const name = profile.fullName.toLowerCase();
+          if (!cas.includes(keyword) && !edu.includes(keyword) && !occ.includes(keyword) && !name.includes(keyword)) return false;
+        }
+
+        return true;
+      });
+
+      renderPublicProfiles(filtered);
+    }
+
+    function renderPublicProfiles(list) {
+      const grid = document.getElementById('public-profiles-grid');
+      const counter = document.getElementById('profiles-count');
+      const emptyState = document.getElementById('home-empty-state');
+
+      counter.innerText = `Found ${list.length} profiles matching criteria`;
+
+      if (list.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      
+      grid.innerHTML = list.map(p => {
+        const displayPhoto = (p.photos && p.photos.length > 0) ? p.photos[0] : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop';
+        const displayGender = p.gender === 'bride' ? 'Bride (वधू)' : 'Groom (वर)';
+        const displayBadgeColor = p.gender === 'bride' ? 'bg-pink-100 text-pink-800' : 'bg-blue-100 text-blue-800';
+
+        return `
+          <div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-cream-200 overflow-hidden flex flex-col group transition duration-300">
+            <!-- Card Image -->
+            <div class="relative h-64 overflow-hidden bg-slate-100">
+              <img src="${displayPhoto}" alt="${p.fullName}" class="w-full h-full object-cover group-hover:scale-102 transition duration-300" referrerPolicy="no-referrer">
+              <span class="absolute top-3 left-3 ${displayBadgeColor} text-xs font-black px-2.5 py-1 rounded-full uppercase tracking-wider">${displayGender}</span>
+              <span class="absolute bottom-3 right-3 bg-maroon-900/90 text-gold-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-gold-600/30">ID: ${p.brokerId || 'BR-Pending'}</span>
+            </div>
+
+            <!-- Profile Overview content -->
+            <div class="p-4 flex-grow flex flex-col justify-between space-y-3 bg-gradient-to-b from-white to-cream-50/20">
+              <div class="space-y-1">
+                <h4 class="font-serif font-bold text-lg text-maroon-950">${p.fullName}</h4>
+                <p class="text-xs text-slate-500 font-semibold">${p.religion} • ${p.caste}</p>
+                
+                <div class="grid grid-cols-2 gap-y-1 gap-x-2 pt-2 border-t border-cream-100 text-xs">
+                  <div class="text-slate-500">Age / Height:</div>
+                  <div class="font-medium text-slate-800">${p.age} yrs, ${p.height}</div>
+                  
+                  <div class="text-slate-500">Education:</div>
+                  <div class="font-medium text-slate-800 truncate">${p.education}</div>
+
+                  <div class="text-slate-500">Profession:</div>
+                  <div class="font-medium text-slate-800 truncate">${p.occupation}</div>
+
+                  <div class="text-slate-500">Location:</div>
+                  <div class="font-medium text-slate-800">${p.city}, ${p.state}</div>
+                </div>
+              </div>
+
+              <!-- Action Card Link -->
+              <button onclick="openBiodataModal('${p.id}')" class="w-full bg-cream-100 hover:bg-maroon-800 hover:text-white text-maroon-950 text-xs font-bold py-2 rounded-lg transition duration-200 flex items-center justify-center gap-1 border border-cream-300/60 shadow-sm">
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i> View Full Biodata
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+
+    // ==========================================================
+    // 7. PLATFORM OWNER / ADMIN DASHBOARD LOGIC
+    // ==========================================================
+    function renderAdminPanel() {
+      // Calculate Stats
+      const totalBrokers = appState.brokers.length;
+      const pendingBrokers = appState.brokers.filter(b => b.status === 'pending').length;
+      const totalProfiles = appState.profiles.length;
+      const activeMemberships = appState.brokers.filter(b => b.membershipStatus === 'active').length;
+
+      document.getElementById('stat-total-brokers').innerText = totalBrokers;
+      document.getElementById('stat-pending-brokers').innerText = pendingBrokers;
+      document.getElementById('stat-total-profiles').innerText = totalProfiles;
+      document.getElementById('stat-active-memberships').innerText = activeMemberships;
+
+      renderAdminBrokers();
+      renderAdminProfiles();
+    }
+
+    function renderAdminBrokers() {
+      const tbody = document.getElementById('admin-brokers-tbody');
+      if (appState.brokers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400">No registered brokers found in platform memory.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = appState.brokers.map(b => {
+        const displayID = b.brokerId || '<span class="text-slate-400 font-semibold">Unassigned</span>';
+        
+        let statusBadge = '';
+        if (b.status === 'approved') statusBadge = '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full text-xs font-bold">Approved</span>';
+        else if (b.status === 'rejected') statusBadge = '<span class="bg-red-100 text-red-800 px-2.5 py-0.5 rounded-full text-xs font-bold">Rejected</span>';
+        else statusBadge = '<span class="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full text-xs font-bold">Pending Review</span>';
+
+        let membershipBadge = '';
+        if (b.membershipStatus === 'active') membershipBadge = '<span class="bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full text-xs font-bold">Active</span>';
+        else membershipBadge = '<span class="bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full text-xs font-bold">Deactivated</span>';
+
+        // Conditional actions
+        let buttonsHtml = '';
+        if (b.status === 'pending') {
+          buttonsHtml += `
+            <button onclick="adminApproveBroker('${b.uid}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-1 px-2.5 rounded transition">Approve</button>
+            <button onclick="adminRejectBroker('${b.uid}')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-1 px-2.5 rounded transition">Reject</button>
+          `;
+        } else if (b.status === 'approved') {
+          if (b.membershipStatus === 'active') {
+            buttonsHtml += `<button onclick="adminToggleMembership('${b.uid}', 'deactivated')" class="bg-slate-700 hover:bg-slate-800 text-white text-xs font-bold py-1 px-2.5 rounded transition">Deactivate</button>`;
+          } else {
+            buttonsHtml += `<button onclick="adminToggleMembership('${b.uid}', 'active')" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1 px-2.5 rounded transition">Activate</button>`;
+          }
+        }
+
+        return `
+          <tr class="hover:bg-cream-50/50 transition">
+            <td class="py-3 px-4 font-bold text-slate-800">${displayID}</td>
+            <td class="py-3 px-4">
+              <span class="block font-bold text-slate-800">${b.name}</span>
+              <span class="block text-[11px] text-slate-400">UID: ${b.uid}</span>
+            </td>
+            <td class="py-3 px-4 text-xs">
+              <span class="block text-slate-700">Email: ${b.email}</span>
+              <span class="block text-slate-700">WhatsApp: ${b.phone}</span>
+            </td>
+            <td class="py-3 px-4 text-center">${statusBadge}</td>
+            <td class="py-3 px-4 text-center">${membershipBadge}</td>
+            <td class="py-3 px-4 text-right space-x-1">${buttonsHtml}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderAdminProfiles() {
+      const grid = document.getElementById('admin-profiles-grid');
+      const query = document.getElementById('admin-search-profiles').value.toLowerCase().trim();
+
+      const list = appState.profiles.filter(p => {
+        if (!query) return true;
+        return p.fullName.toLowerCase().includes(query) || p.caste.toLowerCase().includes(query) || p.brokerId.toLowerCase().includes(query);
+      });
+
+      if (list.length === 0) {
+        grid.innerHTML = '<div class="col-span-full text-center py-8 text-slate-400">No candidate records found.</div>';
+        return;
+      }
+
+      grid.innerHTML = list.map(p => {
+        const displayPhoto = (p.photos && p.photos.length > 0) ? p.photos[0] : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop';
+        return `
+          <div class="bg-white rounded-lg border border-cream-200 p-3 space-y-2 flex items-center gap-3">
+            <img src="${displayPhoto}" class="w-12 h-12 rounded object-cover shadow-sm flex-shrink-0" referrerPolicy="no-referrer">
+            <div class="min-w-0 flex-grow">
+              <span class="block font-bold text-slate-800 truncate text-xs">${p.fullName}</span>
+              <span class="block text-[10px] text-slate-400">${p.gender.toUpperCase()} • ${p.religion} • ${p.caste}</span>
+              <span class="block text-[10px] text-maroon-700 font-bold">Broker ID: ${p.brokerId}</span>
+            </div>
+            <button onclick="openBiodataModal('${p.id}')" class="text-maroon-700 hover:text-maroon-900 flex-shrink-0"><i data-lucide="eye" class="w-4 h-4"></i></button>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    // Admin action: Approve broker
+    async function adminApproveBroker(uid) {
+      const match = appState.brokers.find(b => b.uid === uid);
+      if (!match) return;
+
+      // Assign dynamic sequential Broker ID (BR-001, BR-002, ...)
+      const approvedList = appState.brokers.filter(b => b.brokerId);
+      let nextNum = 1;
+      if (approvedList.length > 0) {
+        const ids = approvedList.map(b => parseInt(b.brokerId.replace("BR-", "")));
+        nextNum = Math.max(...ids) + 1;
+      }
+      const formattedId = `BR-${nextNum.toString().padStart(3, '0')}`;
+
+      match.status = 'approved';
+      match.brokerId = formattedId;
+      match.membershipStatus = 'active'; // Defaults to active on approval
+
+      await saveBrokerToDB(match);
+      renderAdminPanel();
+    }
+
+    // Admin Action: Reject Broker
+    async function adminRejectBroker(uid) {
+      const match = appState.brokers.find(b => b.uid === uid);
+      if (!match) return;
+
+      match.status = 'rejected';
+      match.membershipStatus = 'deactivated';
+
+      await saveBrokerToDB(match);
+      renderAdminPanel();
+    }
+
+    // Admin Action: Toggle Broker membership active/deactivated
+    async function adminToggleMembership(uid, targetStatus) {
+      const match = appState.brokers.find(b => b.uid === uid);
+      if (!match) return;
+
+      match.membershipStatus = targetStatus;
+
+      await saveBrokerToDB(match);
+      renderAdminPanel();
+    }
+
+
+    // ==========================================================
+    // 8. BROKER PORTAL & CANDIDATE CRUD CONTROLLERS
+    // ==========================================================
+    function updateDashboardInfo() {
+      if (appState.currentUserRole !== 'broker' || !appState.currentBrokerInfo) return;
+
+      // Check current broker details in global memory
+      const freshInfo = appState.brokers.find(b => b.uid === appState.currentBrokerInfo.uid);
+      if (freshInfo) {
+        appState.currentBrokerInfo = freshInfo;
+      }
+
+      const b = appState.currentBrokerInfo;
+
+      // Header values
+      document.getElementById('b-dashboard-name').innerText = b.name;
+      document.getElementById('b-dashboard-id').innerText = b.brokerId || 'BR-Pending Approval';
+      document.getElementById('b-dashboard-contact').innerText = `Email: ${b.email} | WhatsApp: ${b.phone}`;
+
+      // Badges
+      const statusBadge = document.getElementById('b-badge-status');
+      const membershipBadge = document.getElementById('b-badge-membership');
+
+      if (b.status === 'approved') {
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800";
+        statusBadge.innerText = "Authorized Agency";
+      } else if (b.status === 'rejected') {
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-100 text-red-800";
+        statusBadge.innerText = "Rejected Broker";
+      } else {
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800";
+        statusBadge.innerText = "Pending Validation";
+      }
+
+      if (b.membershipStatus === 'active') {
+        membershipBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-800";
+        membershipBadge.innerText = "Membership: Active";
+        document.getElementById('broker-inactive-warning').classList.add('hidden');
+        document.getElementById('btn-add-profile').removeAttribute('disabled');
+        document.getElementById('btn-add-profile').classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        membershipBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-200 text-slate-700";
+        membershipBadge.innerText = "Membership: Deactivated";
+        document.getElementById('broker-inactive-warning').classList.remove('hidden');
+        document.getElementById('btn-add-profile').setAttribute('disabled', 'true');
+        document.getElementById('btn-add-profile').classList.add('opacity-50', 'cursor-not-allowed');
+      }
+
+      renderBrokerProfiles();
+    }
+
+    function renderBrokerProfiles() {
+      const grid = document.getElementById('broker-profiles-grid');
+      const emptyState = document.getElementById('broker-empty-state');
+      const searchQuery = document.getElementById('broker-search-candidates').value.toLowerCase().trim();
+
+      if (appState.currentUserRole !== 'broker' || !appState.currentBrokerInfo) return;
+
+      const brokerUid = appState.currentBrokerInfo.uid;
+
+      // Filter profiles owned by this broker
+      const myProfiles = appState.profiles.filter(p => p.brokerUid === brokerUid && (
+        !searchQuery || p.fullName.toLowerCase().includes(searchQuery) || p.caste.toLowerCase().includes(searchQuery)
+      ));
+
+      if (myProfiles.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = myProfiles.map(p => {
+        const displayPhoto = (p.photos && p.photos.length > 0) ? p.photos[0] : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop';
+        const displayGender = p.gender === 'bride' ? 'Bride (वधू)' : 'Groom (वर)';
+        const displayBadgeColor = p.gender === 'bride' ? 'bg-pink-100 text-pink-800' : 'bg-blue-100 text-blue-800';
+
+        // Check if current broker is deactivated, if so, disable modification buttons
+        const isDeactivated = appState.currentBrokerInfo.membershipStatus !== 'active';
+        const disableAttr = isDeactivated ? 'disabled' : '';
+        const disableBtnClass = isDeactivated ? 'opacity-50 cursor-not-allowed' : '';
+
+        return `
+          <div class="bg-white rounded-xl shadow-sm border border-cream-200 overflow-hidden flex flex-col group transition duration-300">
+            <div class="relative h-48 bg-slate-100">
+              <img src="${displayPhoto}" alt="${p.fullName}" class="w-full h-full object-cover" referrerPolicy="no-referrer">
+              <span class="absolute top-2 left-2 ${displayBadgeColor} text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">${displayGender}</span>
+            </div>
+
+            <div class="p-4 flex-grow flex flex-col justify-between space-y-3">
+              <div>
+                <h4 class="font-serif font-bold text-base text-maroon-900">${p.fullName}</h4>
+                <p class="text-xs text-slate-500">${p.religion} • ${p.caste}</p>
+                <div class="text-[11px] text-slate-500 mt-2 space-y-0.5">
+                  <div><strong>Age:</strong> ${p.age} yrs | <strong>Height:</strong> ${p.height}</div>
+                  <div class="truncate"><strong>Profession:</strong> ${p.occupation}</div>
+                  <div class="text-amber-700 font-bold"><strong>Private Phone:</strong> ${p.phone}</div>
+                </div>
+              </div>
+
+              <div class="space-y-1.5 pt-2 border-t border-cream-100">
+                <button onclick="openBiodataModal('${p.id}')" class="w-full bg-cream-100 hover:bg-cream-200 text-maroon-950 text-xs font-bold py-1.5 rounded transition flex items-center justify-center gap-1">
+                  <i data-lucide="eye" class="w-3.5 h-3.5"></i> View & Share
+                </button>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="openEditProfileModal('${p.id}')" ${disableAttr} class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-1.5 rounded transition ${disableBtnClass}">
+                    Edit Details
+                  </button>
+                  <button onclick="handleDeleteProfile('${p.id}')" ${disableAttr} class="bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold py-1.5 rounded transition ${disableBtnClass}">
+                    Delete Card
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // Modal Control wrappers
+    function openAddProfileModal() {
+      // Check validation
+      if (appState.currentBrokerInfo.membershipStatus !== 'active') return;
+
+      document.getElementById('form-candidate-title').innerText = "Add Candidate Profile (बायोडाटा फॉर्म)";
+      document.getElementById('form-candidate').reset();
+      document.getElementById('form-profile-id').value = '';
+      formUploadedImagesBase64 = [];
+      document.getElementById('form-image-preview-container').innerHTML = '';
+
+      document.getElementById('modal-candidate-form').classList.remove('hidden');
+    }
+
+    function openEditProfileModal(id) {
+      if (appState.currentBrokerInfo.membershipStatus !== 'active') return;
+
+      const p = appState.profiles.find(profile => profile.id === id);
+      if (!p) return;
+
+      document.getElementById('form-candidate-title').innerText = "Modify Candidate Profile (बायोडाटा फॉर्म)";
+      
+      document.getElementById('form-profile-id').value = p.id;
+      document.getElementById('form-candidate-name').value = p.fullName;
+      document.getElementById('form-candidate-gender').value = p.gender;
+      document.getElementById('form-candidate-marital').value = p.maritalStatus;
+      document.getElementById('form-candidate-age').value = p.age;
+      document.getElementById('form-candidate-height').value = p.height;
+      document.getElementById('form-candidate-religion').value = p.religion;
+      document.getElementById('form-candidate-caste').value = p.caste;
+      document.getElementById('form-candidate-education').value = p.education;
+      document.getElementById('form-candidate-occupation').value = p.occupation;
+      document.getElementById('form-candidate-income').value = p.income;
+      document.getElementById('form-candidate-city').value = p.city;
+      document.getElementById('form-candidate-state').value = p.state;
+      document.getElementById('form-candidate-phone').value = p.phone;
+      document.getElementById('form-candidate-about').value = p.about;
+      document.getElementById('form-candidate-family').value = p.familyDetails;
+
+      formUploadedImagesBase64 = p.photos || [];
+      renderFormImagesPreviews();
+
+      document.getElementById('modal-candidate-form').classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // Auto-compress and base64 convert images in single dynamic loop
+    function handleFormImageUpload(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = function() {
+            // Use lightweight canvas compression to fit localStorage / database payload caps
+            const canvas = document.createElement('canvas');
+            let w = img.width;
+            let h = img.height;
+            const MAX_W = 400;
+            const MAX_H = 500;
+            if (w > h) {
+              if (w > MAX_W) { h *= MAX_W / w; w = MAX_W; }
+            } else {
+              if (h > MAX_H) { w *= MAX_H / h; h = MAX_H; }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            
+            // Output small lightweight JPEG base64 string
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.65);
+            formUploadedImagesBase64.push(compressedBase64);
+            renderFormImagesPreviews();
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderFormImagesPreviews() {
+      const container = document.getElementById('form-image-preview-container');
+      container.innerHTML = formUploadedImagesBase64.map((img, i) => `
+        <div class="relative w-16 h-16 rounded border border-cream-300 overflow-hidden shadow-sm group">
+          <img src="${img}" class="w-full h-full object-cover" referrerPolicy="no-referrer">
+          <button type="button" onclick="removeFormImage(${i})" class="absolute top-0.5 right-0.5 bg-red-600 text-white rounded-full p-0.5 hover:bg-red-700 transition">
+            <i data-lucide="x" class="w-3 h-3"></i>
+          </button>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function removeFormImage(index) {
+      formUploadedImagesBase64.splice(index, 1);
+      renderFormImagesPreviews();
+    }
+
+    // Add / Update Candidate Action
+    async function handleSaveCandidate(e) {
+      e.preventDefault();
+      
+      const broker = appState.currentBrokerInfo;
+      if (broker.membershipStatus !== 'active') return;
+
+      const profileId = document.getElementById('form-profile-id').value;
+
+      const candidateData = {
+        brokerUid: broker.uid,
+        brokerId: broker.brokerId,
+        fullName: document.getElementById('form-candidate-name').value.trim(),
+        gender: document.getElementById('form-candidate-gender').value,
+        maritalStatus: document.getElementById('form-candidate-marital').value,
+        age: parseInt(document.getElementById('form-candidate-age').value),
+        height: document.getElementById('form-candidate-height').value.trim(),
+        religion: document.getElementById('form-candidate-religion').value.trim(),
+        caste: document.getElementById('form-candidate-caste').value.trim(),
+        education: document.getElementById('form-candidate-education').value.trim(),
+        occupation: document.getElementById('form-candidate-occupation').value.trim(),
+        income: document.getElementById('form-candidate-income').value.trim(),
+        city: document.getElementById('form-candidate-city').value.trim(),
+        state: document.getElementById('form-candidate-state').value.trim(),
+        phone: document.getElementById('form-candidate-phone').value.trim(),
+        about: document.getElementById('form-candidate-about').value.trim(),
+        familyDetails: document.getElementById('form-candidate-family').value.trim(),
+        photos: formUploadedImagesBase64,
+        createdAt: new Date().toISOString()
+      };
+
+      if (profileId) {
+        candidateData.id = profileId;
+      }
+
+      await saveProfileToDB(candidateData);
+      closeModal('modal-candidate-form');
+      updateDashboardInfo();
+    }
+
+    // Delete Profile Action
+    async function handleDeleteProfile(id) {
+      if (appState.currentBrokerInfo.membershipStatus !== 'active') return;
+      if (!confirm("Are you sure you want to permanently delete this candidate card? This action is irreversible.")) return;
+
+      await deleteProfileFromDB(id);
+      updateDashboardInfo();
+    }
+
+
+    // ==========================================================
+    // 9. PRINTABLE BIODATA MODAL ENGINE & WHATSAPP
+    // ==========================================================
+    function openBiodataModal(id) {
+      const p = appState.profiles.find(profile => profile.id === id);
+      if (!p) return;
+
+      const body = document.getElementById('biodata-modal-body');
+      const waShareBtn = document.getElementById('biodata-wa-share');
+
+      const mainPhoto = (p.photos && p.photos.length > 0) ? p.photos[0] : 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop';
+      const secondaryPhotosHtml = (p.photos && p.photos.length > 1) ? `
+        <div class="mt-4 pt-3 border-t border-cream-100">
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Additional Photographs</p>
+          <div class="flex gap-2 flex-wrap">
+            ${p.photos.slice(1).map(img => `<img src="${img}" class="w-16 h-16 object-cover rounded border border-cream-200" referrerPolicy="no-referrer">`).join('')}
+          </div>
+        </div>
+      ` : '';
+
+      // Check access permission to display private phone number (Only owning broker gets to see it)
+      let contactNumberSection = '';
+      const isOwner = appState.currentUserRole === 'broker' && appState.currentBrokerInfo && p.brokerUid === appState.currentBrokerInfo.uid;
+      
+      if (isOwner) {
+        contactNumberSection = `
+          <div class="bg-amber-50 border border-amber-200 rounded-lg p-3.5 text-center">
+            <span class="block text-[11px] font-bold text-amber-900 uppercase tracking-wider">🔒 Broker Confidential Details</span>
+            <span class="block font-bold text-base text-maroon-900 mt-1">Direct Contact: ${p.phone}</span>
+          </div>
+        `;
+      } else {
+        contactNumberSection = `
+          <div class="bg-maroon-50 border border-maroon-100 rounded-lg p-3.5 text-center">
+            <span class="block text-xs font-semibold text-slate-500">Contact details are highly confidential. To express interest:</span>
+            <span class="block text-sm font-bold text-maroon-800 mt-1.5 uppercase tracking-wide">📞 Reference Broker ID: ${p.brokerId}</span>
+          </div>
+        `;
+      }
+
+      // Traditional Indian Shadi Invitation Card Visual design
+      body.innerHTML = `
+        <div class="border-4 border-double border-maroon-800 p-6 md:p-8 bg-[#FAF6F0] rounded-xl space-y-6 relative shadow-inner">
+          
+          <!-- Traditional Borders/Corners -->
+          <div class="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-gold-600"></div>
+          <div class="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-gold-600"></div>
+          <div class="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-gold-600"></div>
+          <div class="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-gold-600"></div>
+
+          <!-- Header Traditional Icon -->
+          <div class="text-center space-y-1">
+            <span class="text-gold-600 font-display font-semibold text-2xl tracking-widest block">।। शुभ विवाह ।।</span>
+            <h3 class="font-display font-black text-xl md:text-2xl text-maroon-800 tracking-wider">MATRIMONIAL BIODATA</h3>
+            <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto"></div>
+          </div>
+
+          <!-- Candidate Core Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+            
+            <!-- Photo Panel -->
+            <div class="space-y-3 mx-auto md:mx-0">
+              <div class="w-40 h-48 rounded-xl overflow-hidden border-2 border-gold-500 shadow-md bg-slate-100">
+                <img src="${mainPhoto}" class="w-full h-full object-cover" referrerPolicy="no-referrer">
+              </div>
+              <span class="block text-center text-xs bg-maroon-800 text-gold-300 font-bold py-1 rounded-full uppercase tracking-widest">${p.gender === 'bride' ? 'Bride (वधू)' : 'Groom (वर)'}</span>
+            </div>
+
+            <!-- Profile Details table -->
+            <div class="md:col-span-2 space-y-4">
+              <div>
+                <h4 class="font-serif font-black text-2xl text-maroon-900 border-b border-gold-300/60 pb-1">${p.fullName}</h4>
+                <p class="text-xs text-slate-500 font-bold tracking-wide uppercase mt-1">${p.religion} • ${p.caste}</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-xs">
+                <div class="text-slate-500 border-b border-cream-200 pb-0.5">Age:</div>
+                <div class="font-semibold text-slate-800 border-b border-cream-200 pb-0.5">${p.age} years</div>
+
+                <div class="text-slate-500 border-b border-cream-200 pb-0.5">Height:</div>
+                <div class="font-semibold text-slate-800 border-b border-cream-200 pb-0.5">${p.height}</div>
+
+                <div class="text-slate-500 border-b border-cream-200 pb-0.5">Marital Status:</div>
+                <div class="font-semibold text-slate-800 border-b border-cream-200 pb-0.5">${p.maritalStatus}</div>
+
+                <div class="text-slate-500 border-b border-cream-200 pb-0.5">Qualification:</div>
+                <div class="font-semibold text-slate-800 border-b border-cream-200 pb-0.5">${p.education}</div>
+
+                <div class="text-slate-500 border-b border-cream-200 pb-0.5">Occupation:</div>
+                <div class="font-semibold text-slate-800 border-b border-cream-200 pb-0.5">${p.occupation}</div>
+
+                <div class="text-slate-500 border-b border-cream-200 pb-0.5">Annual Income:</div>
+                <div class="font-semibold text-slate-800 border-b border-cream-200 pb-0.5">${p.income}</div>
+
+                <div class="text-slate-500 border-b border-cream-200 pb-0.5">Current City:</div>
+                <div class="font-semibold text-slate-800 border-b border-cream-200 pb-0.5">${p.city}, ${p.state}</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Description Blocks -->
+          <div class="space-y-4 pt-3 border-t border-gold-300/40 text-xs leading-relaxed">
+            <div>
+              <h5 class="font-bold text-maroon-800 uppercase tracking-wider mb-1">About the Candidate</h5>
+              <p class="text-slate-700 italic bg-white p-3 rounded-lg border border-cream-200">${p.about}</p>
+            </div>
+            <div>
+              <h5 class="font-bold text-maroon-800 uppercase tracking-wider mb-1">Family & Relatives Background</h5>
+              <p class="text-slate-700 bg-white p-3 rounded-lg border border-cream-200">${p.familyDetails}</p>
+            </div>
+          </div>
+
+          <!-- Confidential contact info block -->
+          ${contactNumberSection}
+
+          <!-- Additional photos segment if they exist -->
+          ${secondaryPhotosHtml}
+
+          <!-- Traditional Invitation note footer -->
+          <div class="text-center pt-2 border-t border-gold-300/40 text-[10px] text-slate-400">
+            <span>Uploaded & Verified by local Marriage Partner Broker ID: <strong>${p.brokerId}</strong></span>
+          </div>
+
+        </div>
+      `;
+
+      // Construct dynamic WhatsApp sharing content
+      const waMessage = `*MUJH SE SHADI KAROGEY - Biodata Summary*\n` +
+                        `---------------------------------------\n` +
+                        `💍 *Candidate:* ${p.fullName} (${p.gender === 'bride' ? 'Bride' : 'Groom'})\n` +
+                        `📅 *Age / Height:* ${p.age} Yrs, ${p.height}\n` +
+                        `🕌 *Religion/Caste:* ${p.religion} - ${p.caste}\n` +
+                        `🎓 *Education:* ${p.education}\n` +
+                        `💼 *Occupation:* ${p.occupation}\n` +
+                        `💰 *Income:* ${p.income}\n` +
+                        `📍 *Location:* ${p.city}, ${p.state}\n` +
+                        `✍️ *About:* ${p.about.substring(0, 150)}...\n\n` +
+                        `📞 *Interested? Contact Broker ID:* *${p.brokerId}* on MUJH SE SHADI KAROGEY platform!`;
+
+      const encodedMsg = encodeURIComponent(waMessage);
+      waShareBtn.onclick = () => {
+        window.open(`https://wa.me/?text=${encodedMsg}`, '_blank');
+      };
+
+      document.getElementById('modal-biodata').classList.remove('hidden');
+    }
+
+    // Dynamic Print System
+    function printBiodata() {
+      // Clone modal contents to the active print container
+      const body = document.getElementById('biodata-modal-body').innerHTML;
+      const printContainer = document.getElementById('print-biodata-container');
+      
+      printContainer.innerHTML = body;
+      printContainer.classList.remove('hidden');
+      
+      // Trigger native browser printing
+      window.print();
+      
+      // Clean up print container afterwards
+      printContainer.innerHTML = '';
+      printContainer.classList.add('hidden');
+    }
+
+    // Modal Control wrapper
+    function openSetupModal() {
+      document.getElementById('modal-setup').classList.remove('hidden');
+    }
+
+
+    // ==========================================================
+    // 10. SYSTEM INIT LIFECYCLE TRIGGER
+    // ==========================================================
+    window.addEventListener('DOMContentLoaded', initializeAppSystem);
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Mujh Se Shadi Karogey",
+  "description": "A complete, production-ready Indian matrimonial platform for brokers and candidate biodatas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
